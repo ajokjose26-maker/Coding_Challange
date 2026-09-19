@@ -32,6 +32,18 @@ steps:
       ORANGEHRM_USERNAME: $(ORANGEHRM_USERNAME)
       ORANGEHRM_PASSWORD: $(ORANGEHRM_PASSWORD)
 
+  - script: |
+      curl -s https://dl.k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
+      echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+      sudo apt-get update
+      sudo apt-get install -y k6
+    displayName: Install k6
+
+  - script: npm run performance
+    displayName: Run k6 performance smoke test
+    env:
+      ORANGEHRM_BASE_URL: $(ORANGEHRM_BASE_URL)
+
   - task: PublishTestResults@2
     displayName: Publish test results
     condition: succeededOrFailed()

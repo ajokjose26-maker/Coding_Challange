@@ -8,3 +8,4 @@ test-videos/
 coverage/
 .DS_Store
 *.log
+k6-results/

@@ -16,6 +16,7 @@ The solution must demonstrate:
 - Clean coding practices
 - HTML reporting
 - Video recording
+- Performance testing
 - Proper project structure
 - README documentation
 
@@ -120,6 +121,8 @@ orangehrm-automation/
 │
 ├── api/
 │   └── employeeApi.ts
+├── performance/
+│   └── orangehrm-smoke.js
 │
 ├── playwright.config.ts
 ├── package.json
@@ -145,6 +148,7 @@ Implemented capabilities include:
 - Reusable workflow helpers under `utils/testHelpers.ts`.
 - Playwright HTML reporting.
 - Video recording for every test, stored in `test-videos/` and linked from the HTML report.
+- k6 read-only performance smoke testing for the OrangeHRM login page.
 - Explicit assertions for page state, employee details, API response fields, and logout navigation.
 
 ## API limitation
@@ -161,6 +165,14 @@ npx playwright install chromium
 npx playwright test
 npx playwright show-report
 ```
+
+Performance testing can be run separately with k6:
+
+```bash
+npm run performance
+```
+
+The k6 scenario uses read-only login-page requests and does not represent a production capacity benchmark.
 
 ---
 

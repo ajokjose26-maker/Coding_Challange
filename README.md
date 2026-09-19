@@ -12,6 +12,7 @@ This project implements a professional end-to-end UI automation framework for th
 - Profile image upload from test data
 - HTML reporting and failure artifacts
 - Video recording for every test and screenshots on failure
+- k6 performance smoke testing for the OrangeHRM login page
 - Clear project structure and documentation
 
 ## Project structure
@@ -71,6 +72,7 @@ For local configuration, copy `.env.example` to `.env` and update the values if 
 - `test-data/`: JSON employee data and profile image used by the UI test.
 - `playwright.config.ts`: Browser, timeout, reporter, video, and output configuration.
 - `azure-pipelines.yml`: Azure CI setup and artifact publishing.
+- `performance/`: k6 read-only performance scenarios.
 
 ## How to Run Tests
 
@@ -103,6 +105,24 @@ To type-check the project without running tests:
 ```bash
 npm run typecheck
 ```
+
+## Performance Testing
+
+Performance testing is implemented separately from the Playwright UI workflow using [k6](https://k6.io/). The scenario performs a read-only load test against the OrangeHRM login page and does not create, edit, or delete shared demo data.
+
+Install k6 using the instructions for your operating system at [k6 installation](https://grafana.com/docs/k6/latest/set-up/install-k6/), then run:
+
+```bash
+npm run performance
+```
+
+The default test uses 5 virtual users for 30 seconds. Override the load without changing source code:
+
+```bash
+K6_VUS=10 K6_DURATION=1m npm run performance
+```
+
+The performance thresholds are a failed-request rate below 5% and a 95th-percentile response time below 3 seconds. These are smoke-test thresholds for the public demo, not a capacity or production benchmark.
 
 ## Dependencies Used
 
