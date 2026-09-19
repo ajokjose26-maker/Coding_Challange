@@ -1,7 +1,15 @@
 import { APIRequestContext } from '@playwright/test';
 
-export async function getOrangeHrmSessionToken(apiRequest: APIRequestContext, username: string, password: string): Promise<string | null> {
-  const res = await apiRequest.post('https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/auth/login', {
+const defaultOrangeHrmBaseUrl = 'https://opensource-demo.orangehrmlive.com';
+
+export async function getOrangeHrmSessionToken(
+  apiRequest: APIRequestContext,
+  username: string,
+  password: string,
+  baseUrl = process.env.ORANGEHRM_BASE_URL || defaultOrangeHrmBaseUrl,
+): Promise<string | null> {
+  const normalizedBaseUrl = baseUrl.replace(/\/$/, '');
+  const res = await apiRequest.post(`${normalizedBaseUrl}/web/index.php/api/v2/auth/login`, {
     data: {
       username,
       password,

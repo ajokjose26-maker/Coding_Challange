@@ -1,6 +1,8 @@
 import { APIRequestContext } from '@playwright/test';
 import type { EmployeeData } from '../utils/testDataUtils';
 
+const defaultOrangeHrmBaseUrl = 'https://opensource-demo.orangehrmlive.com';
+
 export type OrangeHrmEmployee = {
   employeeId?: string;
   firstName?: string;
@@ -9,7 +11,14 @@ export type OrangeHrmEmployee = {
 };
 
 export class EmployeeApi {
-  constructor(private readonly request: APIRequestContext) {}
+  private readonly baseUrl: string;
+
+  constructor(
+    private readonly request: APIRequestContext,
+    baseUrl = process.env.ORANGEHRM_BASE_URL || defaultOrangeHrmBaseUrl,
+  ) {
+    this.baseUrl = baseUrl.replace(/\/$/, '');
+  }
 
   async getEmployees(employeeId?: string) {
     const params = new URLSearchParams({ limit: '100', offset: '0' });
@@ -18,7 +27,7 @@ export class EmployeeApi {
     }
 
     const response = await this.request.get(
-      `https://opensource-demo.orangehrmlive.com/web/index.php/api/v2/pim/employees?${params.toString()}`,
+      `${this.baseUrl}/web/index.php/api/v2/pim/employees?${params.toString()}`,
     );
     if (!response.ok()) {
       throw new Error(`API call failed: ${response.status()} ${response.statusText()}`);

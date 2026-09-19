@@ -1,6 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { getEmployeePayload, getUpdatedEmployeePayload } from '../utils/testDataUtils';
-import { addEmployee, createUniqueEmployeeData, loginToDashboard } from '../utils/testHelpers';
+import { addEmployee, createEmployeeData, loginToDashboard } from '../utils/testHelpers';
 import { EmployeeApi, SimulatedEmployeeApi } from '../api/employeeApi';
 
 const employeeTemplate = getEmployeePayload();
@@ -18,7 +18,7 @@ test.describe('OrangeHRM employee lifecycle', () => {
     employeeDetailsPage,
     request,
   }) => {
-    const employee = createUniqueEmployeeData(employeeTemplate);
+    const employee = createEmployeeData(employeeTemplate);
 
     // Step 1: Login to the OrangeHRM application.
     await loginToDashboard(loginPage);

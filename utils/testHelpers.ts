@@ -4,7 +4,7 @@ import * as path from 'node:path';
 
 const profileImagePath = path.resolve(__dirname, '../test-data/profile_image.jfif');
 
-export function createUniqueEmployeeData(employeeTemplate: EmployeeData): EmployeeData {
+export function createEmployeeData(employeeTemplate: EmployeeData): EmployeeData {
   return {
     ...employeeTemplate,
     firstName: `${employeeTemplate.firstName}`,
