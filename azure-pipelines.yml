@@ -1,0 +1,58 @@
+trigger:
+  - main
+
+pr:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  CI: 'true'
+
+steps:
+  - task: NodeTool@0
+    displayName: Install Node.js
+    inputs:
+      versionSpec: '20.x'
+
+  - script: npm ci
+    displayName: Install npm dependencies
+
+  - script: npx playwright install --with-deps chromium
+    displayName: Install Playwright Chromium
+
+  - script: npm run typecheck
+    displayName: Type-check project
+
+  - script: npm test
+    displayName: Run Playwright tests
+    env:
+      ORANGEHRM_BASE_URL: $(ORANGEHRM_BASE_URL)
+      ORANGEHRM_USERNAME: $(ORANGEHRM_USERNAME)
+      ORANGEHRM_PASSWORD: $(ORANGEHRM_PASSWORD)
+
+  - task: PublishTestResults@2
+    displayName: Publish test results
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results/junit.xml'
+      failTaskOnFailedTests: false
+      testRunTitle: 'OrangeHRM Playwright Tests'
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish HTML report
+    condition: succeededOrFailed()
+    inputs:
+      targetPath: 'playwright-report'
+      artifact: 'playwright-report'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish test videos and traces
+    condition: succeededOrFailed()
+    inputs:
+      targetPath: 'test-videos'
+      artifact: 'test-videos'
+      publishLocation: 'pipeline'

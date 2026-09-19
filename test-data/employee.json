@@ -1,0 +1,18 @@
+{
+  "employee": {
+    "firstName": "Ava",
+    "middleName": "Marie",
+    "lastName": "Patel",
+    "employeeId": "EMP-2048",
+    "jobTitle": "QA Analyst",
+    "status": "Full Time Permanent",
+    "location": "New York Sales Office"
+  },
+  "updatedEmployee": {
+    "firstName": "Ava",
+    "middleName": "Marie",
+    "lastName": "Patel",
+    "employeeId": "EMP-2048",
+    "jobTitle": "Automaton Tester"
+  }
+}
