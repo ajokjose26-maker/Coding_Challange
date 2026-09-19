@@ -29,10 +29,10 @@ export async function addEmployee(
   await pageObjects.pimPage.gotoAddEmployee();
   const fillEmployeeForm = async () => {
     await pageObjects.addEmployeePage.fillEmployeeDetails(
-    employee.firstName,
-    employee.middleName,
-    employee.lastName,
-    employee.employeeId,
+      employee.firstName,
+      employee.middleName,
+      employee.lastName,
+      employee.employeeId,
     );
     await pageObjects.addEmployeePage.uploadProfileImage(profileImagePath);
   };
@@ -55,12 +55,12 @@ export async function addEmployee(
 
 export async function verifyEmployeeDetails(
   employeeDetailsPage: AppFixtures['employeeDetailsPage'],
-  expectedEmployee: EmployeeData,  
-) {
+  expectedEmployee: EmployeeData,
+): Promise<void> {
   await employeeDetailsPage.verifyPersonalDetailsLoaded();
   await employeeDetailsPage.verifyEmployeeName(
     expectedEmployee.firstName,
-    expectedEmployee.lastName
+    expectedEmployee.lastName,
   );
   await employeeDetailsPage.verifyEmployeeId(expectedEmployee.employeeId);
 }

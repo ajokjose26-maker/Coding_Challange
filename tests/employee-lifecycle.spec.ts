@@ -23,7 +23,6 @@ test.describe('OrangeHRM employee lifecycle', () => {
     // Step 1: Login to the OrangeHRM application.
     await loginToDashboard(loginPage);
     await dashboardPage.verifyDashboardLoaded();
-    await dashboardPage.verifyDashboardLoaded();
     await dashboardPage.gotoPIM();
 
     // Step 2: Add the employee through the UI, including the profile image.

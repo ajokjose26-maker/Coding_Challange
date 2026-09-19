@@ -8,13 +8,13 @@ export class EmployeeDetailsPage {
   readonly deleteButton: Locator;
   readonly confirmDeleteButton: Locator;
   readonly employeeNameHeading: Locator;
-  readonly jobTitledropDown: Locator;
+  readonly jobTitleDropdown: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.firstNameInput = page.locator('input[name="firstName"]');
     this.lastNameInput = page.locator('input[name="lastName"]');
-    this.jobTitledropDown = page.getByText('-- Select --').first();
+    this.jobTitleDropdown = page.getByText('-- Select --').first();
     this.saveButton = page.getByRole('button', { name: 'Save' }).last();
     this.deleteButton = page.getByRole('button').filter({ hasText: /^$/ }).nth(4);
     this.confirmDeleteButton = page.getByRole('button', { name: 'Yes, Delete' });
@@ -37,8 +37,8 @@ export class EmployeeDetailsPage {
     })
     .locator('.oxd-select-text');
     await this.editEmployeeDetails();
-    await expect(this.jobTitledropDown).toBeVisible();
-    await this.jobTitledropDown.click();
+    await expect(this.jobTitleDropdown).toBeVisible();
+    await this.jobTitleDropdown.click();
     await this.page.getByRole('option', { name: jobTitle, exact: true }).click();
     await expect(jobStatusDropDown).toBeVisible();
     await jobStatusDropDown.click();
@@ -88,9 +88,7 @@ export class EmployeeDetailsPage {
     await searchNameInput.fill(`${firstName}`);
     await searchIdInput.fill(`${employeeId}`);
     await searchButton.click();
-    await this.page.waitForTimeout(1000); // Wait for the search results to load
     await expect(employeeTable).toBeVisible();
     await expect(employeeNameCell).toBeVisible();
-  
   }
 }

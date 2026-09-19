@@ -16,7 +16,7 @@ export class DashboardPage {
   }
 
   async gotoPIM() {
-    this.pimMenu.click();
+    await this.pimMenu.click();
     await this.page.waitForURL('**/pim/viewEmployeeList');
   }
 
