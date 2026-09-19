@@ -4,7 +4,6 @@ node_modules/
 !.env.example
 playwright-report/
 test-results/
-test-videos/
 coverage/
 .DS_Store
 *.log
